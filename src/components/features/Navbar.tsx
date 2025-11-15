@@ -1,17 +1,33 @@
 import { Button } from "../ui/button";
 import Hamburger from "hamburger-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Search } from "lucide-react";
+import { Switch } from "@/components/ui/switch.tsx";
+import { MdDarkMode } from "react-icons/md";
+import { CiSun } from "react-icons/ci";
 export const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   return (
     <>
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
-        className="flex justify-between items-center p-4 w-full h-24 shadow-md"
+        className="flex justify-between items-center p-4 w-full h-24 shadow-md dark:bg-(--backgroud-dark) bg-white"
       >
         <div>
           <img src="" alt="" />
@@ -37,7 +53,10 @@ export const Navbar = () => {
           />
         </div>
 
-        <div className="hidden md:flex gap-3">
+        <div className="hidden md:flex gap-3 items-center">
+          <Switch onClick={toggleDarkMode} className="mr-10">
+            {isDarkMode ? <MdDarkMode /> : <CiSun />}
+          </Switch>
           <Button className="h-10">Login</Button>
           <Button className="h-10">Sign up</Button>
         </div>
