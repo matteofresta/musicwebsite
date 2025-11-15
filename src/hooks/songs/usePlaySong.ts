@@ -5,14 +5,10 @@ export const usePlaySong = () => {
 
   const handlePlaySong = (url: string) => {
     if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+      audioRef.current.src = url;
+      audioRef.current.play();
     }
-
-    const audio = new Audio(url);
-    audioRef.current = audio;
-    audio.play().then();
   };
 
-  return { handlePlaySong };
+  return { handlePlaySong, audioRef };
 };
